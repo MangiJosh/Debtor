@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Test Email to tshimangadzot@gmail.com</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #333;
+            margin: 0;
+            font-size: 2.5em;
+        }
+        .header p {
+            color: #666;
+            margin: 10px 0 0 0;
+        }
+        .test-info {
+            background: #e8f4fd;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #3498db;
+        }
+        .test-info h3 {
+            margin: 0 0 15px 0;
+            color: #2c3e50;
+        }
+        .test-info ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .test-info li {
+            margin: 8px 0;
+            color: #34495e;
+        }
+        .button {
+            background: #27ae60;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+        }
+        .button:hover {
+            background: #229954;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(39, 174, 96, 0.4);
+        }
+        .button:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        .result {
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        .info {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+        }
+        .loading {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+        }
+        .email-preview {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #dee2e6;
+        }
+        .email-preview h4 {
+            margin: 0 0 15px 0;
+            color: #495057;
+        }
+        .email-preview p {
+            margin: 5px 0;
+            color: #6c757d;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            color: #666;
+            font-size: 14px;
+        }
+        .method-tabs {
+            display: flex;
+            margin: 20px 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .method-tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            color: #666;
+            border-bottom: 2px solid transparent;
+        }
+        .method-tab.active {
+            color: #007bff;
+            border-bottom-color: #007bff;
+        }
+        .method-content {
+            display: none;
+        }
+        .method-content.active {
+            display: block;
+        }
+        .code-block {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #dee2e6;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📧 Test Email Sender</h1>
+            <p>Send a dummy email to tshimangadzot@gmail.com</p>
+        </div>
+        
+        <div class="test-info">
+            <h3>📋 Test Email Details</h3>
+            <ul>
+                <li><strong>Recipient:</strong> tshimangadzot@gmail.com</li>
+                <li><strong>Test Debtor:</strong> Tshimanga Dzot</li>
+                <li><strong>Case Reference:</strong> LP-2024-TEST</li>
+                <li><strong>Test Amount:</strong> R1,500.00</li>
+                <li><strong>Email Type:</strong> Payment Reminder (Test)</li>
+            </ul>
+        </div>
+
+        <div class="method-tabs">
+            <button class="method-tab active" onclick="showMethod('browser')">🌐 Browser Method</button>
+            <button class="method-tab" onclick="showMethod('gmail')">📧 Gmail Method</button>
+            <button class="method-tab" onclick="showMethod('outlook')">📮 Outlook Method</button>
+        </div>
+
+        <!-- Browser Method -->
+        <div id="browser-method" class="method-content active">
+            <div class="email-preview">
+                <h4>📄 Email Preview</h4>
+                <p><strong>Subject:</strong> Test Email - Payment Reminder - Case Reference: LP-2024-TEST</p>
+                <p><strong>Content:</strong> Professional debt collection reminder with payment link</p>
+                <p><strong>Features:</strong> HTML formatted, responsive design, security notices</p>
+            </div>
+            
+            <div style="text-align: center;">
+                <button class="button" onclick="sendViaBrowser()" id="browserButton">
+                    📧 Send via Browser
+                </button>
+            </div>
+        </div>
+
+        <!-- Gmail Method -->
+        <div id="gmail-method" class="method-content">
+            <div class="info">
+                <h4>📧 Send via Gmail</h4>
+                <p>This will open Gmail with a pre-filled email to tshimangadzot@gmail.com</p>
+            </div>
+            
+            <div class="code-block">
+Subject: Test Email - Payment Reminder - Case Reference: LP-2024-TEST
+
+Dear Tshimanga Dzot,
+
+This is a test email from Legal Partners Debt Collection System.
+
+Account Details:
+- Debtor Name: Tshimanga Dzot
+- Case Reference: LP-2024-TEST
+- Email: tshimangadzot@gmail.com
+- Test Amount: R1,500.00
+
+This is a test email to verify email functionality. No actual payment is required.
+
+Test Payment Link: https://mangijosh.github.io/Debtor/#pay-test
+
+Note: This is a test email for verification purposes only.
+
+Best regards,
+Legal Partners Debt Collection Team
+            </div>
+            
+            <div style="text-align: center;">
+                <button class="button" onclick="sendViaGmail()" id="gmailButton">
+                    📧 Open Gmail
+                </button>
+            </div>
+        </div>
+
+        <!-- Outlook Method -->
+        <div id="outlook-method" class="method-content">
+            <div class="info">
+                <h4>📮 Send via Outlook</h4>
+                <p>This will open Outlook with a pre-filled email to tshimangadzot@gmail.com</p>
+            </div>
+            
+            <div class="code-block">
+Subject: Test Email - Payment Reminder - Case Reference: LP-2024-TEST
+
+Dear Tshimanga Dzot,
+
+This is a test email from Legal Partners Debt Collection System.
+
+Account Details:
+- Debtor Name: Tshimanga Dzot
+- Case Reference: LP-2024-TEST
+- Email: tshimangadzot@gmail.com
+- Test Amount: R1,500.00
+
+This is a test email to verify email functionality. No actual payment is required.
+
+Test Payment Link: https://mangijosh.github.io/Debtor/#pay-test
+
+Note: This is a test email for verification purposes only.
+
+Best regards,
+Legal Partners Debt Collection Team
+            </div>
+            
+            <div style="text-align: center;">
+                <button class="button" onclick="sendViaOutlook()" id="outlookButton">
+                    📮 Open Outlook
+                </button>
+            </div>
+        </div>
+        
+        <div id="result"></div>
+        
+        <div class="footer">
+            <p>Legal Partners Debt Collection System | Test Email Tool</p>
+            <p>Multiple methods available for sending test emails</p>
+        </div>
+    </div>
+    
+    <script>
+        function showMethod(method) {
+            // Hide all method contents
+            document.querySelectorAll('.method-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.method-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected method content
+            document.getElementById(method + '-method').classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        function sendViaBrowser() {
+            const resultDiv = document.getElementById('result');
+            const button = document.getElementById('browserButton');
+            
+            // Update button state
+            button.disabled = true;
+            button.textContent = '📤 Sending...';
+            
+            // Show loading message
+            resultDiv.innerHTML = '<div class="result loading">🔄 Attempting to send email via browser...</div>';
+            
+            // Simulate sending process
+            setTimeout(() => {
+                // Create email content
+                const subject = "Test Email - Payment Reminder - Case Reference: LP-2024-TEST";
+                const body = `Dear Tshimanga Dzot,
+
+This is a test email from Legal Partners Debt Collection System.
+
+Account Details:
+- Debtor Name: Tshimanga Dzot
+- Case Reference: LP-2024-TEST
+- Email: tshimangadzot@gmail.com
+- Test Amount: R1,500.00
+
+This is a test email to verify email functionality. No actual payment is required.
+
+Test Payment Link: https://mangijosh.github.io/Debtor/#pay-test
+
+Note: This is a test email for verification purposes only.
+
+Best regards,
+Legal Partners Debt Collection Team`;
+
+                // Try to use mailto link
+                const mailtoLink = `mailto:tshimangadzot@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                
+                // Open mailto link
+                window.open(mailtoLink, '_blank');
+                
+                // Show success message
+                resultDiv.innerHTML = `
+                    <div class="result success">
+                        <h3>✅ Email Client Opened!</h3>
+                        <p><strong>Status:</strong> Your default email client should have opened with a pre-filled email</p>
+                        <p><strong>Recipient:</strong> tshimangadzot@gmail.com</p>
+                        <p><strong>Subject:</strong> ${subject}</p>
+                        <p style="margin-top: 15px; font-weight: bold;">📬 Check your email client and send the email!</p>
+                    </div>
+                `;
+                
+                // Restore button state
+                button.disabled = false;
+                button.textContent = '📧 Send via Browser';
+            }, 2000);
+        }
+
+        function sendViaGmail() {
+            const subject = "Test Email - Payment Reminder - Case Reference: LP-2024-TEST";
+            const body = `Dear Tshimanga Dzot,
+
+This is a test email from Legal Partners Debt Collection System.
+
+Account Details:
+- Debtor Name: Tshimanga Dzot
+- Case Reference: LP-2024-TEST
+- Email: tshimangadzot@gmail.com
+- Test Amount: R1,500.00
+
+This is a test email to verify email functionality. No actual payment is required.
+
+Test Payment Link: https://mangijosh.github.io/Debtor/#pay-test
+
+Note: This is a test email for verification purposes only.
+
+Best regards,
+Legal Partners Debt Collection Team`;
+
+            const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=tshimangadzot@gmail.com&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.open(gmailUrl, '_blank');
+            
+            document.getElementById('result').innerHTML = `
+                <div class="result success">
+                    <h3>✅ Gmail Opened!</h3>
+                    <p><strong>Status:</strong> Gmail should have opened in a new tab with a pre-filled email</p>
+                    <p><strong>Recipient:</strong> tshimangadzot@gmail.com</p>
+                    <p><strong>Subject:</strong> ${subject}</p>
+                    <p style="margin-top: 15px; font-weight: bold;">📬 Complete the email in Gmail and send it!</p>
+                </div>
+            `;
+        }
+
+        function sendViaOutlook() {
+            const subject = "Test Email - Payment Reminder - Case Reference: LP-2024-TEST";
+            const body = `Dear Tshimanga Dzot,
+
+This is a test email from Legal Partners Debt Collection System.
+
+Account Details:
+- Debtor Name: Tshimanga Dzot
+- Case Reference: LP-2024-TEST
+- Email: tshimangadzot@gmail.com
+- Test Amount: R1,500.00
+
+This is a test email to verify email functionality. No actual payment is required.
+
+Test Payment Link: https://mangijosh.github.io/Debtor/#pay-test
+
+Note: This is a test email for verification purposes only.
+
+Best regards,
+Legal Partners Debt Collection Team`;
+
+            const outlookUrl = `https://outlook.live.com/mail/0/deeplink/compose?to=tshimangadzot@gmail.com&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.open(outlookUrl, '_blank');
+            
+            document.getElementById('result').innerHTML = `
+                <div class="result success">
+                    <h3>✅ Outlook Opened!</h3>
+                    <p><strong>Status:</strong> Outlook should have opened in a new tab with a pre-filled email</p>
+                    <p><strong>Recipient:</strong> tshimangadzot@gmail.com</p>
+                    <p><strong>Subject:</strong> ${subject}</p>
+                    <p style="margin-top: 15px; font-weight: bold;">📬 Complete the email in Outlook and send it!</p>
+                </div>
+            `;
+        }
+        
+        // Auto-focus on first button
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('browserButton').focus();
+        });
+    </script>
+</body>
+</html>

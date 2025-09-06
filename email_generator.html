@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Generator for tshimangadzot@gmail.com</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #333;
+            margin: 0;
+            font-size: 2.5em;
+        }
+        .header p {
+            color: #666;
+            margin: 10px 0 0 0;
+        }
+        .email-form {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #dee2e6;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .form-group textarea {
+            height: 200px;
+            resize: vertical;
+        }
+        .button {
+            background: #27ae60;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+        .button:hover {
+            background: #229954;
+        }
+        .button.secondary {
+            background: #6c757d;
+        }
+        .button.secondary:hover {
+            background: #5a6268;
+        }
+        .result {
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .info {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+        }
+        .email-preview {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #dee2e6;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        .tabs {
+            display: flex;
+            margin: 20px 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            color: #666;
+            border-bottom: 2px solid transparent;
+        }
+        .tab.active {
+            color: #007bff;
+            border-bottom-color: #007bff;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📧 Email Generator</h1>
+            <p>Generate and send test emails to tshimangadzot@gmail.com</p>
+        </div>
+        
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('generator')">📝 Email Generator</button>
+            <button class="tab" onclick="showTab('preview')">👁️ Email Preview</button>
+            <button class="tab" onclick="showTab('send')">📤 Send Options</button>
+        </div>
+
+        <!-- Email Generator Tab -->
+        <div id="generator" class="tab-content active">
+            <div class="email-form">
+                <h3>📝 Generate Test Email</h3>
+                
+                <div class="form-group">
+                    <label for="recipient">Recipient Email:</label>
+                    <input type="email" id="recipient" value="tshimangadzot@gmail.com" readonly>
+                </div>
+                
+                <div class="form-group">
+                    <label for="subject">Subject:</label>
+                    <input type="text" id="subject" value="Test Email - Payment Reminder - Case Reference: LP-2024-TEST">
+                </div>
+                
+                <div class="form-group">
+                    <label for="debtorName">Debtor Name:</label>
+                    <input type="text" id="debtorName" value="Tshimanga Dzot">
+                </div>
+                
+                <div class="form-group">
+                    <label for="caseRef">Case Reference:</label>
+                    <input type="text" id="caseRef" value="LP-2024-TEST">
+                </div>
+                
+                <div class="form-group">
+                    <label for="amount">Amount:</label>
+                    <input type="text" id="amount" value="R1,500.00">
+                </div>
+                
+                <div class="form-group">
+                    <label for="emailBody">Email Body:</label>
+                    <textarea id="emailBody" placeholder="Email content will be generated automatically..."></textarea>
+                </div>
+                
+                <button class="button" onclick="generateEmail()">🔄 Generate Email</button>
+                <button class="button secondary" onclick="resetForm()">🔄 Reset</button>
+            </div>
+        </div>
+
+        <!-- Email Preview Tab -->
+        <div id="preview" class="tab-content">
+            <div class="info">
+                <h3>👁️ Email Preview</h3>
+                <p>This is how your email will look when sent to tshimangadzot@gmail.com</p>
+            </div>
+            
+            <div class="email-preview" id="emailPreview">
+                Click "Generate Email" to see the preview...
+            </div>
+        </div>
+
+        <!-- Send Options Tab -->
+        <div id="send" class="tab-content">
+            <div class="info">
+                <h3>📤 Send Email Options</h3>
+                <p>Choose how you want to send the email to tshimangadzot@gmail.com</p>
+            </div>
+            
+            <div style="text-align: center; margin: 30px 0;">
+                <button class="button" onclick="sendViaMailto()">📧 Open Default Email Client</button>
+                <button class="button" onclick="sendViaGmail()">📧 Open Gmail</button>
+                <button class="button" onclick="sendViaOutlook()">📮 Open Outlook</button>
+                <button class="button secondary" onclick="copyToClipboard()">📋 Copy Email Content</button>
+            </div>
+            
+            <div id="sendResult"></div>
+        </div>
+    </div>
+    
+    <script>
+        function showTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        function generateEmail() {
+            const debtorName = document.getElementById('debtorName').value;
+            const caseRef = document.getElementById('caseRef').value;
+            const amount = document.getElementById('amount').value;
+            const recipient = document.getElementById('recipient').value;
+            
+            const emailBody = `Dear ${debtorName},
+
+This is a test email from Legal Partners Debt Collection System.
+
+Account Details:
+- Debtor Name: ${debtorName}
+- Case Reference: ${caseRef}
+- Email: ${recipient}
+- Test Amount: ${amount}
+
+This is a test email to verify email functionality. No actual payment is required.
+
+Test Payment Link: https://mangijosh.github.io/Debtor/#pay-test
+
+Note: This is a test email for verification purposes only.
+
+Best regards,
+Legal Partners Debt Collection Team
+Test Email System
+
+---
+Legal Partners | Debt Collection Services
+Email: collections@legalpartners.co.za | Phone: 011 123 4567
+This test email was sent to ${recipient} regarding test case ${caseRef}`;
+
+            document.getElementById('emailBody').value = emailBody;
+            document.getElementById('emailPreview').textContent = emailBody;
+            
+            // Show success message
+            showMessage('Email generated successfully!', 'success');
+        }
+
+        function resetForm() {
+            document.getElementById('debtorName').value = 'Tshimanga Dzot';
+            document.getElementById('caseRef').value = 'LP-2024-TEST';
+            document.getElementById('amount').value = 'R1,500.00';
+            document.getElementById('emailBody').value = '';
+            document.getElementById('emailPreview').textContent = 'Click "Generate Email" to see the preview...';
+        }
+
+        function sendViaMailto() {
+            const recipient = document.getElementById('recipient').value;
+            const subject = document.getElementById('subject').value;
+            const body = document.getElementById('emailBody').value;
+            
+            if (!body) {
+                showMessage('Please generate the email first!', 'error');
+                return;
+            }
+            
+            const mailtoLink = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.open(mailtoLink, '_blank');
+            
+            showMessage('Default email client opened with pre-filled email!', 'success');
+        }
+
+        function sendViaGmail() {
+            const recipient = document.getElementById('recipient').value;
+            const subject = document.getElementById('subject').value;
+            const body = document.getElementById('emailBody').value;
+            
+            if (!body) {
+                showMessage('Please generate the email first!', 'error');
+                return;
+            }
+            
+            const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${recipient}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.open(gmailUrl, '_blank');
+            
+            showMessage('Gmail opened with pre-filled email!', 'success');
+        }
+
+        function sendViaOutlook() {
+            const recipient = document.getElementById('recipient').value;
+            const subject = document.getElementById('subject').value;
+            const body = document.getElementById('emailBody').value;
+            
+            if (!body) {
+                showMessage('Please generate the email first!', 'error');
+                return;
+            }
+            
+            const outlookUrl = `https://outlook.live.com/mail/0/deeplink/compose?to=${recipient}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.open(outlookUrl, '_blank');
+            
+            showMessage('Outlook opened with pre-filled email!', 'success');
+        }
+
+        function copyToClipboard() {
+            const body = document.getElementById('emailBody').value;
+            
+            if (!body) {
+                showMessage('Please generate the email first!', 'error');
+                return;
+            }
+            
+            navigator.clipboard.writeText(body).then(() => {
+                showMessage('Email content copied to clipboard!', 'success');
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = body;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showMessage('Email content copied to clipboard!', 'success');
+            });
+        }
+
+        function showMessage(message, type) {
+            const resultDiv = document.getElementById('sendResult');
+            resultDiv.innerHTML = `<div class="result ${type}">${message}</div>`;
+            
+            // Auto-hide after 3 seconds
+            setTimeout(() => {
+                resultDiv.innerHTML = '';
+            }, 3000);
+        }
+
+        // Generate email on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            generateEmail();
+        });
+    </script>
+</body>
+</html>
