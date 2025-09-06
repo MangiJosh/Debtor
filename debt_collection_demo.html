@@ -1,0 +1,1669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debt Collection Payment Portal - Demo</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90' fill='%23667eea'%3E⚖️%3C/text%3E%3C/svg%3E">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .card-shadow { box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+        .success-animation { animation: bounceIn 0.6s ease-out; }
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .fade-in { animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center cursor-pointer" onclick="showPage('email')">
+                    <div class="flex-shrink-0">
+                        <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">LP</span>
+                        </div>
+                    </div>
+                    <div class="ml-3">
+                        <span class="text-xl font-semibold text-gray-900">Legal Partners</span>
+                        <span class="text-sm text-gray-500 block">Debt Collection Services</span>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button onclick="showPage('admin')" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                        Admin Dashboard
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Email Reminder Page -->
+    <div id="email-page" class="page">
+        <div class="max-w-4xl mx-auto py-8 px-4">
+            <div class="bg-white rounded-lg card-shadow overflow-hidden fade-in">
+                <!-- Email Header -->
+                <div class="bg-blue-600 p-6 text-white">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-white bg-opacity-20 rounded-lg flex items-center justify-center mr-4">
+                            <span class="text-white font-bold">📧</span>
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-semibold">Payment Reminder</h2>
+                            <p class="text-blue-100">from: Legal Partners Collections</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Email Content -->
+                <div class="p-8">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6">Outstanding Debt Payment Required</h3>
+                    
+                    <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-6">
+                        <p class="text-red-800"><strong>Dear Lindiwe Khumalo,</strong></p>
+                        <p class="text-red-700 mt-2">This is a formal notice regarding your outstanding debt. Immediate payment is required to avoid further legal action.</p>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-gray-900 mb-3">Account Details</h4>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Debtor Name:</span>
+                                    <span class="font-medium">Lindiwe Khumalo</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Case Reference:</span>
+                                    <span class="font-medium">LP-2024-005</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Original Creditor:</span>
+                                    <span class="font-medium">WesBank</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                            <h4 class="font-semibold text-gray-900 mb-3">Amount Due</h4>
+                            <div class="text-3xl font-bold text-red-600 mb-2">R2,015.75</div>
+                            <div class="text-sm text-gray-600">Due Date: Overdue</div>
+                        </div>
+                    </div>
+
+                    <div class="bg-blue-50 p-6 rounded-lg mb-6">
+                        <h4 class="font-semibold text-blue-900 mb-3">🚀 New: Pay Online Instantly!</h4>
+                        <p class="text-blue-700 mb-4">We've made it easier for you to settle your debt. No more bank transfers or waiting periods - pay securely online in just a few clicks.</p>
+                        
+                        <div class="flex flex-col md:flex-row gap-3">
+                        <button onclick="showPage('payment')" class="w-full md:w-auto bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-8 rounded-lg transition duration-200 transform hover:scale-105">
+                            💳 Pay Now - R2,015.75
+                        </button>
+                            <button onclick="showPaymentArrangementModal()" class="w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-lg transition duration-200 transform hover:scale-105">
+                                📝 Payment Arrangement
+                        </button>
+                        </div>
+                    </div>
+
+                    <div class="text-sm text-gray-600 border-t pt-4">
+                        <p><strong>Important:</strong> Failure to respond within 7 days may result in additional legal costs and credit bureau listings.</p>
+                        <p class="mt-2">For queries, contact us at: <a href="mailto:collections@legalpartners.co.za" class="text-blue-600">collections@legalpartners.co.za</a> | 011 123 4567</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Page -->
+    <div id="payment-page" class="page hidden">
+        <div class="max-w-2xl mx-auto py-8 px-4">
+            <div class="bg-white rounded-lg card-shadow overflow-hidden fade-in">
+                <!-- Payment Header -->
+                <div class="gradient-bg p-6 text-white">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h2 class="text-2xl font-bold">Secure Payment</h2>
+                            <p class="text-blue-100">Complete your debt settlement</p>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-sm text-blue-100">Case Reference</div>
+                            <div class="font-semibold">LP-2024-001</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-8">
+                    <!-- Debtor Information -->
+                    <div class="bg-gray-50 p-4 rounded-lg mb-6">
+                        <h3 class="font-semibold text-gray-900 mb-3">Account Information</h3>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="text-sm text-gray-600">Debtor Name</label>
+                                <div class="font-medium">Sipho Mthembu</div>
+                            </div>
+                            <div>
+                                <label class="text-sm text-gray-600">Case Reference</label>
+                                <div class="font-medium">LP-2024-001</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment Amount -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Payment Amount</label>
+                        <div class="relative">
+                            <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">R</span>
+                            <input type="number" id="payment-amount" value="171.88" step="0.01" class="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        <p class="text-sm text-gray-500 mt-1">You can adjust the amount if you have a payment arrangement</p>
+                    </div>
+
+                    <!-- Payment Methods -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-4">Select Payment Method</label>
+                        <div class="space-y-3">
+                            <label class="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                                <input type="radio" name="payment-method" value="card" class="text-blue-600" checked>
+                                <div class="ml-3 flex items-center">
+                                    <span class="text-2xl mr-3">💳</span>
+                                    <div>
+                                        <div class="font-medium">Credit/Debit Card</div>
+                                        <div class="text-sm text-gray-500">Instant payment via card</div>
+                                    </div>
+                                </div>
+                            </label>
+                            
+                            <label class="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                                <input type="radio" name="payment-method" value="eft" class="text-blue-600">
+                                <div class="ml-3 flex items-center">
+                                    <span class="text-2xl mr-3">🔗</span>
+                                    <div>
+                                        <div class="font-medium">Instant EFT</div>
+                                        <div class="text-sm text-gray-500">Direct bank transfer</div>
+                                    </div>
+                                </div>
+                            </label>
+                            
+                            <label class="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                                <input type="radio" name="payment-method" value="banking-app" class="text-blue-600">
+                                <div class="ml-3 flex items-center">
+                                    <span class="text-2xl mr-3">📱</span>
+                                    <div>
+                                        <div class="font-medium">Pay by Banking App</div>
+                                        <div class="text-sm text-gray-500">Use your mobile banking app</div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Security Notice -->
+                    <div class="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
+                        <div class="flex">
+                            <span class="text-green-500 mr-2">🔒</span>
+                            <div>
+                                <div class="font-medium text-green-800">Secure Payment</div>
+                                <div class="text-sm text-green-700">Your payment is protected by bank-level encryption</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pay Buttons -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <button onclick="processPayment()" class="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-6 rounded-lg transition duration-200 transform hover:scale-105">
+                        Pay Now - R<span id="display-amount">171.88</span>
+                    </button>
+                        <button onclick="showPaymentArrangementModal()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-lg transition duration-200 transform hover:scale-105">
+                            Payment Arrangement
+                        </button>
+                    </div>
+
+                    <p class="text-center text-sm text-gray-500 mt-4">
+                        By clicking "Pay Now" you agree to our terms and conditions
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Page -->
+    <div id="confirmation-page" class="page hidden">
+        <div class="max-w-2xl mx-auto py-8 px-4">
+            <div class="bg-white rounded-lg card-shadow overflow-hidden text-center fade-in">
+                <div class="p-8">
+                    <!-- Success Animation -->
+                    <div class="success-animation mb-6">
+                        <div class="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-12 h-12 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                        <h2 class="text-3xl font-bold text-green-600 mb-2">Payment Successful!</h2>
+                    </div>
+
+                    <div class="mb-8">
+                        <p class="text-lg text-gray-700 mb-4">
+                            <strong>Thank you, Sipho Mthembu.</strong><br>
+                            Your payment of <span class="font-bold text-green-600">R<span id="confirmed-amount">171.88</span></span> has been received.
+                        </p>
+                        
+                        <div class="bg-gray-50 rounded-lg p-4 text-left max-w-md mx-auto">
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Case Reference:</span>
+                                    <span class="font-medium">LP-2024-001</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Payment Confirmation:</span>
+                                    <span class="font-medium" id="confirmation-number">PAY-240905-001</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Date & Time:</span>
+                                    <span class="font-medium" id="payment-date"></span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Status:</span>
+                                    <span class="font-medium text-green-600">Paid in Full</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="space-y-4">
+                        <button onclick="downloadReceipt()" class="w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition duration-200">
+                            📄 Download Receipt
+                        </button>
+                        
+                        <div class="flex flex-col md:flex-row gap-2 justify-center">
+                            <button onclick="sendSMSConfirmation()" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded transition duration-200">
+                                📱 Send SMS Confirmation
+                            </button>
+                            <button onclick="sendEmailConfirmation()" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded transition duration-200">
+                                ✉️ Email Confirmation
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 pt-6 border-t">
+                        <p class="text-sm text-gray-600">
+                            Your debt has been settled. No further action is required.<br>
+                            Keep this confirmation for your records.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="admin-page" class="page hidden">
+        <div class="max-w-7xl mx-auto py-8 px-4">
+            <div class="bg-white rounded-lg card-shadow fade-in">
+                <!-- Dashboard Header -->
+                <div class="p-6 border-b">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-900">Admin Dashboard</h2>
+                            <p class="text-gray-600">Debt collection management system</p>
+                        </div>
+                        <div class="flex space-x-3">
+                            <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+                                📊 Generate Report
+                            </button>
+                            <button onclick="showPage('email')" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg">
+                                ← Back to Demo
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 p-6 border-b">
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <div class="text-2xl font-bold text-blue-600">12</div>
+                        <div class="text-sm text-blue-800">Total Cases</div>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <div class="text-2xl font-bold text-green-600">4</div>
+                        <div class="text-sm text-green-800">Paid Today</div>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg">
+                        <div class="text-2xl font-bold text-yellow-600">8</div>
+                        <div class="text-sm text-yellow-800">Outstanding</div>
+                    </div>
+                    <div class="bg-purple-50 p-4 rounded-lg">
+                        <div class="text-2xl font-bold text-purple-600">R5,247.23</div>
+                        <div class="text-sm text-purple-800">Collected Today</div>
+                    </div>
+                </div>
+
+                <!-- Debtors Table -->
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold text-gray-900">Debtor Management</h3>
+                        <button onclick="showAddDebtorModal()" class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-lg">
+                            + Add New Debtor
+                        </button>
+                    </div>
+                    
+                    <!-- Filters -->
+                    <div class="bg-gray-50 p-4 rounded-lg mb-6">
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Search</label>
+                                <input type="text" id="search-filter" placeholder="Name or Case Ref..." class="w-full border border-gray-300 rounded px-3 py-2 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                                <select id="status-filter" class="w-full border border-gray-300 rounded px-3 py-2 text-sm">
+                                    <option value="">All Statuses</option>
+                                    <option value="Paid">Paid</option>
+                                    <option value="Unpaid">Unpaid</option>
+                                    <option value="Partial">Partial</option>
+                                    <option value="Arrangement">Arrangement</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Amount Range</label>
+                                <select id="amount-filter" class="w-full border border-gray-300 rounded px-3 py-2 text-sm">
+                                    <option value="">All Amounts</option>
+                                    <option value="0-100">R0 - R100</option>
+                                    <option value="100-500">R100 - R500</option>
+                                    <option value="500-1000">R500 - R1,000</option>
+                                    <option value="1000+">R1,000+</option>
+                                </select>
+                            </div>
+                            <div class="flex items-end">
+                                <button onclick="clearFilters()" class="w-full bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium px-4 py-2 rounded text-sm">
+                                    Clear Filters
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Case Ref</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Amount Due</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Last Reminder</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr id="debtor-1" class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Sipho Mthembu</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">LP-2024-001</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R171.88</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span id="status-1" class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Paid</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2024-09-05</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm space-x-2">
+                                        <button onclick="sendReminder(1)" class="text-blue-600 hover:text-blue-900">Send Reminder</button>
+                                        <button onclick="viewHistory(1)" class="text-green-600 hover:text-green-900">View History</button>
+                                        <button onclick="viewDebtor(1)" class="text-gray-700 hover:text-gray-900">View Debtor</button>
+                                        <div class="relative inline-block">
+                                            <button onclick="toggleActionsMenu(1)" class="text-gray-500 hover:text-gray-700 ml-2">⋯</button>
+                                            <div id="actions-menu-1" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 border hidden">
+                                                <div class="py-1">
+                                                    <button onclick="viewDebtorPage(1)" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View Page</button>
+                                                    <button onclick="editDebtor(1)" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit</button>
+                                                    <button onclick="deleteDebtor(1)" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Delete</button>
+                                                    <button onclick="copyDebtorLink(1)" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Copy Link</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Sarah Smith</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">LP-2024-002</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R845.32</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">Arrangement</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2024-09-03</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm space-x-2">
+                                        <button onclick="sendReminder(2)" class="text-blue-600 hover:text-blue-900">Send Reminder</button>
+                                        <button onclick="viewHistory(2)" class="text-green-600 hover:text-green-900">View History</button>
+                                        <button onclick="viewDebtor(2)" class="text-gray-700 hover:text-gray-900">View Debtor</button>
+                                        <div class="relative inline-block">
+                                            <button onclick="toggleActionsMenu(2)" class="text-gray-500 hover:text-gray-700 ml-2">⋯</button>
+                                            <div id="actions-menu-2" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 border hidden">
+                                                <div class="py-1">
+                                                    <button onclick="viewDebtorPage(2)" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View Page</button>
+                                                    <button onclick="editDebtor(2)" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit</button>
+                                                    <button onclick="deleteDebtor(2)" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Delete</button>
+                                                    <button onclick="copyDebtorLink(2)" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Copy Link</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Mike Johnson</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">LP-2024-003</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R1,234.56</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">Partial</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2024-09-01</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm space-x-2">
+                                        <button onclick="sendReminder(3)" class="text-blue-600 hover:text-blue-900">Send Reminder</button>
+                                        <button onclick="viewHistory(3)" class="text-green-600 hover:text-green-900">View History</button>
+                                        <button onclick="viewDebtor(3)" class="text-gray-700 hover:text-gray-900">View Debtor</button>
+                                        <div class="relative inline-block">
+                                            <button onclick="toggleActionsMenu(3)" class="text-gray-500 hover:text-gray-700 ml-2">⋯</button>
+                                            <div id="actions-menu-3" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 border hidden">
+                                                <div class="py-1">
+                                                    <button onclick="viewDebtorPage(3)" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View Page</button>
+                                                    <button onclick="editDebtor(3)" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit</button>
+                                                    <button onclick="deleteDebtor(3)" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Delete</button>
+                                                    <button onclick="copyDebtorLink(3)" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Copy Link</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Peter Adams</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">LP-2024-004</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R422.10</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">Unpaid</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2024-09-02</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm space-x-2">
+                                        <button onclick="sendReminder(4)" class="text-blue-600 hover:text-blue-900">Send Reminder</button>
+                                        <button onclick="viewHistory(4)" class="text-green-600 hover:text-green-900">View History</button>
+                                        <button onclick="viewDebtor(4)" class="text-gray-700 hover:text-gray-900">View Debtor</button>
+                                        <div class="relative inline-block">
+                                            <button onclick="toggleActionsMenu(4)" class="text-gray-500 hover:text-gray-700 ml-2">⋯</button>
+                                            <div id="actions-menu-4" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 border hidden">
+                                                <div class="py-1">
+                                                    <button onclick="viewDebtorPage(4)" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View Page</button>
+                                                    <button onclick="editDebtor(4)" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit</button>
+                                                    <button onclick="deleteDebtor(4)" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Delete</button>
+                                                    <button onclick="copyDebtorLink(4)" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Copy Link</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Lindiwe Khumalo</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">LP-2024-005</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R2,015.75</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">Arrangement</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2024-08-30</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm space-x-2">
+                                        <button onclick="sendReminder(5)" class="text-blue-600 hover:text-blue-900">Send Reminder</button>
+                                        <button onclick="viewHistory(5)" class="text-green-600 hover:text-green-900">View History</button>
+                                        <button onclick="viewDebtor(5)" class="text-gray-700 hover:text-gray-900">View Debtor</button>
+                                        <div class="relative inline-block">
+                                            <button onclick="toggleActionsMenu(5)" class="text-gray-500 hover:text-gray-700 ml-2">⋯</button>
+                                            <div id="actions-menu-5" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 border hidden">
+                                                <div class="py-1">
+                                                    <button onclick="viewDebtorPage(5)" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View Page</button>
+                                                    <button onclick="editDebtor(5)" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit</button>
+                                                    <button onclick="deleteDebtor(5)" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Delete</button>
+                                                    <button onclick="copyDebtorLink(5)" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Copy Link</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Thabo Nene</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">LP-2024-006</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R95.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">Unpaid</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2024-09-05</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm space-x-2">
+                                        <button onclick="sendReminder(6)" class="text-blue-600 hover:text-blue-900">Send Reminder</button>
+                                        <button onclick="viewHistory(6)" class="text-green-600 hover:text-green-900">View History</button>
+                                        <button onclick="viewDebtor(6)" class="text-gray-700 hover:text-gray-900">View Debtor</button>
+                                        <div class="relative inline-block">
+                                            <button onclick="toggleActionsMenu(6)" class="text-gray-500 hover:text-gray-700 ml-2">⋯</button>
+                                            <div id="actions-menu-6" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 border hidden">
+                                                <div class="py-1">
+                                                    <button onclick="viewDebtorPage(6)" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View Page</button>
+                                                    <button onclick="editDebtor(6)" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit</button>
+                                                    <button onclick="deleteDebtor(6)" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Delete</button>
+                                                    <button onclick="copyDebtorLink(6)" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Copy Link</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Aisha Patel</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">LP-2024-007</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R650.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Paid</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2024-09-04</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm space-x-2">
+                                        <button onclick="sendReminder(7)" class="text-blue-600 hover:text-blue-900">Send Reminder</button>
+                                        <button onclick="viewHistory(7)" class="text-green-600 hover:text-green-900">View History</button>
+                                        <button onclick="viewDebtor(7)" class="text-gray-700 hover:text-gray-900">View Debtor</button>
+                                        <div class="relative inline-block">
+                                            <button onclick="toggleActionsMenu(7)" class="text-gray-500 hover:text-gray-700 ml-2">⋯</button>
+                                            <div id="actions-menu-7" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 border hidden">
+                                                <div class="py-1">
+                                                    <button onclick="viewDebtorPage(7)" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View Page</button>
+                                                    <button onclick="editDebtor(7)" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit</button>
+                                                    <button onclick="deleteDebtor(7)" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Delete</button>
+                                                    <button onclick="copyDebtorLink(7)" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Copy Link</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Kevin Brown</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">LP-2024-008</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R312.40</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">Partial</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2024-09-02</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm space-x-2">
+                                        <button onclick="sendReminder(8)" class="text-blue-600 hover:text-blue-900">Send Reminder</button>
+                                        <button onclick="viewHistory(8)" class="text-green-600 hover:text-green-900">View History</button>
+                                        <button onclick="viewDebtor(8)" class="text-gray-700 hover:text-gray-900">View Debtor</button>
+                                        <div class="relative inline-block">
+                                            <button onclick="toggleActionsMenu(8)" class="text-gray-500 hover:text-gray-700 ml-2">⋯</button>
+                                            <div id="actions-menu-8" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 border hidden">
+                                                <div class="py-1">
+                                                    <button onclick="viewDebtorPage(8)" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View Page</button>
+                                                    <button onclick="editDebtor(8)" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit</button>
+                                                    <button onclick="deleteDebtor(8)" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Delete</button>
+                                                    <button onclick="copyDebtorLink(8)" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Copy Link</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- Debtor Profile Modal -->
+                <div id="debtor-modal" class="fixed inset-0 bg-black bg-opacity-40 hidden items-center justify-center p-4">
+                    <div class="bg-white rounded-lg shadow-xl max-w-lg w-full">
+                        <div class="px-6 py-4 border-b flex items-center justify-between">
+                            <h4 class="text-lg font-semibold text-gray-900">Debtor Profile</h4>
+                            <button onclick="closeDebtorProfile()" class="text-gray-500 hover:text-gray-700">✕</button>
+            </div>
+                        <div class="p-6 space-y-4">
+                            <div>
+                                <div class="text-sm text-gray-500">Name</div>
+                                <div id="profile-name" class="font-medium text-gray-900"></div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <div class="text-sm text-gray-500">Case Ref</div>
+                                    <div id="profile-case" class="font-medium text-gray-900"></div>
+                                </div>
+                                <div>
+                                    <div class="text-sm text-gray-500">Status</div>
+                                    <div id="profile-status" class="font-medium text-gray-900"></div>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <div class="text-sm text-gray-500">Amount Due</div>
+                                    <div id="profile-amount" class="font-medium text-gray-900"></div>
+                                </div>
+                                <div>
+                                    <div class="text-sm text-gray-500">Last Payment</div>
+                                    <div id="profile-last-payment" class="font-medium text-gray-900"></div>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <div class="text-sm text-gray-500">Email</div>
+                                    <div id="profile-email" class="font-medium text-gray-900"></div>
+                                </div>
+                                <div>
+                                    <div class="text-sm text-gray-500">Phone</div>
+                                    <div id="profile-phone" class="font-medium text-gray-900"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="text-sm text-gray-500">Address</div>
+                                <div id="profile-address" class="font-medium text-gray-900"></div>
+                            </div>
+                            <div>
+                                <div class="text-sm text-gray-500">Debt Summary</div>
+                                <div id="profile-debt-summary" class="font-medium text-gray-900"></div>
+                            </div>
+                        </div>
+                        <div class="px-6 py-4 border-t flex justify-end space-x-2">
+                            <button onclick="closeDebtorProfile()" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium px-4 py-2 rounded">Close</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- View History Modal -->
+                <div id="history-modal" class="fixed inset-0 bg-black bg-opacity-40 hidden items-center justify-center p-4">
+                    <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full">
+                        <div class="px-6 py-4 border-b flex items-center justify-between">
+                            <h4 class="text-lg font-semibold text-gray-900">Payment History</h4>
+                            <button onclick="closeHistoryModal()" class="text-gray-500 hover:text-gray-700">✕</button>
+                        </div>
+                        <div class="p-6">
+                            <div class="mb-4">
+                                <div class="text-sm text-gray-500">Debtor</div>
+                                <div id="history-debtor" class="font-medium text-gray-900"></div>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+                                            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Action</th>
+                                            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Amount</th>
+                                            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Notes</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="history-rows" class="bg-white divide-y divide-gray-200"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="px-6 py-4 border-t flex justify-end">
+                            <button onclick="closeHistoryModal()" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium px-4 py-2 rounded">Close</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Send Reminder Modal (Simplified) -->
+                <div id="reminder-modal" class="fixed inset-0 bg-black bg-opacity-40 hidden items-center justify-center p-4">
+                    <div class="bg-white rounded-lg shadow-xl max-w-xl w-full">
+                        <div class="px-6 py-4 border-b flex items-center justify-between">
+                            <h4 class="text-lg font-semibold text-gray-900">Send Reminder</h4>
+                            <button onclick="closeReminderModal()" class="text-gray-500 hover:text-gray-700">✕</button>
+                        </div>
+                        <div class="p-6 space-y-4">
+                            <div>
+                                <label class="block text-sm text-gray-600 mb-1">WhatsApp Number</label>
+                                <input id="reminder-phone" type="text" class="w-full border border-gray-300 rounded px-3 py-2" placeholder="082 000 0000">
+                            </div>
+                            <div>
+                                <label class="block text-sm text-gray-600 mb-1">Email</label>
+                                <input id="reminder-email" type="email" class="w-full border border-gray-300 rounded px-3 py-2" placeholder="debtor@example.com">
+                            </div>
+                            <div>
+                                <label class="block text-sm text-gray-600 mb-1">Message</label>
+                                <textarea id="reminder-message" rows="6" class="w-full border border-gray-300 rounded px-3 py-2"></textarea>
+                                <div class="text-xs text-gray-500 mt-1">Will send to both WhatsApp and Email.</div>
+                            </div>
+                        </div>
+                        <div class="px-6 py-4 border-t flex justify-end space-x-2">
+                            <button onclick="closeReminderModal()" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium px-4 py-2 rounded">Close</button>
+                            <button onclick="sendReminderToBoth()" class="bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2 rounded">Send Reminder</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add New Debtor Modal -->
+                <div id="add-debtor-modal" class="fixed inset-0 bg-black bg-opacity-40 hidden items-center justify-center p-4">
+                    <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full">
+                        <div class="px-6 py-4 border-b flex items-center justify-between">
+                            <h4 class="text-lg font-semibold text-gray-900">Add New Debtor</h4>
+                            <button onclick="closeAddDebtorModal()" class="text-gray-500 hover:text-gray-700">✕</button>
+                        </div>
+                        <form id="add-debtor-form" class="p-6 space-y-4">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
+                                    <input type="text" id="new-debtor-name" required class="w-full border border-gray-300 rounded px-3 py-2" placeholder="Enter full name">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Case Reference *</label>
+                                    <input type="text" id="new-debtor-case" required class="w-full border border-gray-300 rounded px-3 py-2" placeholder="LP-2024-XXX">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Amount Due *</label>
+                                    <input type="number" id="new-debtor-amount" required step="0.01" class="w-full border border-gray-300 rounded px-3 py-2" placeholder="0.00">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Status *</label>
+                                    <select id="new-debtor-status" required class="w-full border border-gray-300 rounded px-3 py-2">
+                                        <option value="">Select Status</option>
+                                        <option value="Unpaid">Unpaid</option>
+                                        <option value="Partial">Partial</option>
+                                        <option value="Paid">Paid</option>
+                                        <option value="Arrangement">Arrangement</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                    <input type="email" id="new-debtor-email" class="w-full border border-gray-300 rounded px-3 py-2" placeholder="debtor@example.com">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                                    <input type="text" id="new-debtor-phone" class="w-full border border-gray-300 rounded px-3 py-2" placeholder="082 000 0000">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                                <input type="text" id="new-debtor-address" class="w-full border border-gray-300 rounded px-3 py-2" placeholder="Street address, City, Postal Code">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Debt Summary *</label>
+                                <textarea id="new-debtor-summary" required rows="3" class="w-full border border-gray-300 rounded px-3 py-2" placeholder="Brief description of why the debtor owes money..."></textarea>
+                            </div>
+                        </form>
+                        <div class="px-6 py-4 border-t flex justify-end space-x-2">
+                            <button onclick="closeAddDebtorModal()" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium px-4 py-2 rounded">Cancel</button>
+                            <button onclick="addNewDebtor()" class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded">Add Debtor</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Arrangement Modal -->
+                <div id="payment-arrangement-modal" class="fixed inset-0 bg-black bg-opacity-40 hidden items-center justify-center p-4">
+                    <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] flex flex-col">
+                        <div class="px-6 py-4 border-b flex items-center justify-between">
+                            <h4 class="text-lg font-semibold text-gray-900">Payment Arrangement</h4>
+                            <button onclick="closePaymentArrangementModal()" class="text-gray-500 hover:text-gray-700">✕</button>
+                        </div>
+                        <div class="p-6 space-y-6 overflow-y-auto flex-1">
+                            <!-- Payment Type Selection -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-3">Payment Type</label>
+                                <div class="space-y-3">
+                                    <label class="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                                        <input type="radio" name="payment-type" value="full" class="text-blue-600" checked>
+                                        <div class="ml-3">
+                                            <div class="font-medium">Full Payment</div>
+                                            <div class="text-sm text-gray-500">Pay the full amount on a specific date</div>
+                                        </div>
+                                    </label>
+                                    <label class="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                                        <input type="radio" name="payment-type" value="partial" class="text-blue-600">
+                                        <div class="ml-3">
+                                            <div class="font-medium">Partial Payments</div>
+                                            <div class="text-sm text-gray-500">Split payment into multiple installments</div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Full Payment Section -->
+                            <div id="full-payment-section" class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Payment Date</label>
+                                    <input type="date" id="full-payment-date" class="w-full border border-gray-300 rounded px-3 py-2">
+                                </div>
+                                <div class="bg-blue-50 p-4 rounded-lg">
+                                    <div class="text-sm text-blue-800">
+                                        <strong>Full Amount:</strong> R<span id="full-amount-display">171.88</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Partial Payment Section -->
+                            <div id="partial-payment-section" class="space-y-4 hidden">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Payment Schedule</label>
+                                    <div id="partial-payments-container" class="space-y-3">
+                                        <div class="partial-payment-item border border-gray-200 rounded-lg p-4">
+                                            <div class="grid grid-cols-2 gap-4">
+                                                <div>
+                                                    <label class="block text-sm text-gray-600 mb-1">Amount</label>
+                                                    <input type="number" class="partial-amount w-full border border-gray-300 rounded px-3 py-2" step="0.01" placeholder="0.00">
+                                                </div>
+                                                <div>
+                                                    <label class="block text-sm text-gray-600 mb-1">Date</label>
+                                                    <input type="date" class="partial-date w-full border border-gray-300 rounded px-3 py-2">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="button" onclick="addPartialPayment()" class="mt-3 text-blue-600 hover:text-blue-800 text-sm font-medium">
+                                        + Add Another Payment
+                                    </button>
+                                </div>
+                                <div class="bg-yellow-50 p-4 rounded-lg">
+                                    <div class="text-sm text-yellow-800">
+                                        <strong>Total Arranged:</strong> R<span id="total-arranged">0.00</span> / R<span id="total-due">171.88</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="px-6 py-4 border-t flex justify-end space-x-2">
+                            <button onclick="closePaymentArrangementModal()" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium px-4 py-2 rounded">Cancel</button>
+                            <button onclick="submitPaymentArrangement()" class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded">Submit Arrangement</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let debtorData = {
+            name: "Lindiwe Khumalo",
+            caseRef: "LP-2024-005",
+            amount: 2015.75
+        };
+
+        // Page navigation
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => page.classList.add('hidden'));
+            document.getElementById(pageId + '-page').classList.remove('hidden');
+            
+            // Update amount display when showing payment page
+            if (pageId === 'payment') {
+                document.getElementById('payment-amount').value = debtorData.amount;
+                updateDisplayAmount();
+            }
+        }
+
+        // Update display amount
+        function updateDisplayAmount() {
+            const amount = document.getElementById('payment-amount').value;
+            document.getElementById('display-amount').textContent = amount;
+        }
+
+        // Process payment
+        function processPayment() {
+            const amount = document.getElementById('payment-amount').value;
+            const paymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
+            
+            // Update confirmation page with payment details
+            document.getElementById('confirmed-amount').textContent = amount;
+            document.getElementById('confirmation-number').textContent = 'PAY-' + new Date().toISOString().slice(0,10).replace(/-/g,'') + '-001';
+            document.getElementById('payment-date').textContent = new Date().toLocaleString();
+            
+            // Update admin dashboard status
+            document.getElementById('status-1').textContent = 'Paid';
+            document.getElementById('status-1').className = 'px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800';
+            
+            // Show confirmation page
+            showPage('confirmation');
+        }
+
+        // Download receipt (simulation)
+        function downloadReceipt() {
+            alert('Receipt would be downloaded as PDF in real implementation');
+        }
+
+        // Send SMS confirmation (simulation)
+        function sendSMSConfirmation() {
+            alert('SMS confirmation sent to registered mobile number');
+        }
+
+        // Send email confirmation (simulation)
+        function sendEmailConfirmation() {
+            alert('Email confirmation sent to registered email address');
+        }
+
+        // Admin functions & modals
+        let currentDebtorId = null;
+
+        const debtorHistories = {
+            1: [
+                { date: '2024-09-04 10:15', action: 'Payment', amount: 'R171.88', notes: 'Paid in full' },
+                { date: '2024-09-03 09:00', action: 'Reminder Sent', amount: '-', notes: 'Email' }
+            ],
+            2: [
+                { date: '2024-09-05 12:30', action: 'Arrangement Set', amount: '-', notes: 'Partial payments: R400.00 on 2024-09-10, R445.32 on 2024-09-25' },
+                { date: '2024-09-03 08:45', action: 'Reminder Sent', amount: '-', notes: 'SMS' }
+            ],
+            3: [
+                { date: '2024-08-28 14:31', action: 'Payment', amount: 'R600.00', notes: 'Partial payment' },
+                { date: '2024-08-20 11:10', action: 'Reminder Sent', amount: '-', notes: 'Email' }
+            ],
+            4: [],
+            5: [
+                { date: '2024-09-02 15:00', action: 'Arrangement Set', amount: '-', notes: 'Partial payments: R1,000.00 on 2024-09-15, R1,015.75 on 2024-10-01' }
+            ],
+            6: [],
+            7: [
+                { date: '2024-09-04 12:00', action: 'Payment', amount: 'R650.00', notes: 'Paid in full' }
+            ],
+            8: [
+                { date: '2024-09-02 10:05', action: 'Payment', amount: 'R150.00', notes: 'Partial payment' }
+            ]
+        };
+
+        function sendReminder(debtorId) {
+            currentDebtorId = debtorId;
+            const profile = debtorProfiles[debtorId];
+            if (profile) {
+                document.getElementById('reminder-phone').value = profile.phone || '';
+                document.getElementById('reminder-email').value = profile.email || '';
+                const baseUrl = window.location.origin + window.location.pathname;
+                const payLink = `${baseUrl}#pay-${debtorId}`;
+                document.getElementById('reminder-message').value = `Hi ${profile.name}, this is a friendly reminder regarding your outstanding balance of ${profile.amount} (case ${profile.caseRef}).\n\nPay securely here: ${payLink}\n\nThank you, Legal Partners Collections`;
+            }
+            const modal = document.getElementById('reminder-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        async function sendReminderToBoth() {
+            const phoneRaw = document.getElementById('reminder-phone').value || '';
+            const email = document.getElementById('reminder-email').value || '';
+            const message = document.getElementById('reminder-message').value;
+            
+            if (!currentDebtorId) {
+                alert('Error: No debtor selected');
+                return;
+            }
+            
+            try {
+                // Show loading state
+                const sendButton = document.querySelector('#reminder-modal button[onclick="sendReminderToBoth()"]');
+                const originalText = sendButton.textContent;
+                sendButton.textContent = 'Sending...';
+                sendButton.disabled = true;
+                
+                // Send email via PHP API
+                const response = await fetch('email_handler.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-API-Key': 'your_secure_api_key_here' // Update this with your actual API key
+                    },
+                    body: JSON.stringify({
+                        debtor_id: currentDebtorId,
+                        email_type: 'reminder'
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Email sent successfully
+                    console.log('Email sent:', result.data);
+                    
+                    // Open WhatsApp with updated message including payment link
+                    if (phoneRaw) {
+                        const phoneDigits = phoneRaw.replace(/\D/g, '');
+                        const updatedMessage = message + `\n\nSecure payment link: ${result.data.payment_link}`;
+                        const whatsappUrl = `https://wa.me/${phoneDigits}?text=${encodeURIComponent(updatedMessage)}`;
+                        window.open(whatsappUrl, '_blank');
+                    }
+                    
+                    // Show success message
+                    alert(`✅ Reminder sent successfully!\n\nEmail sent to: ${email}\nWhatsApp sent to: ${phoneRaw}\n\nPayment link: ${result.data.payment_link}`);
+                    
+                    // Update last reminder date in the table
+                    updateLastReminderDate(currentDebtorId);
+                    
+                } else {
+                    alert(`❌ Error sending email: ${result.error}\n\nWhatsApp will still be sent.`);
+                    
+                    // Still send WhatsApp even if email fails
+                    if (phoneRaw) {
+                        const phoneDigits = phoneRaw.replace(/\D/g, '');
+                        const whatsappUrl = `https://wa.me/${phoneDigits}?text=${encodeURIComponent(message)}`;
+                        window.open(whatsappUrl, '_blank');
+                    }
+                }
+                
+            } catch (error) {
+                console.error('Error:', error);
+                alert(`❌ Network error: ${error.message}\n\nWhatsApp will still be sent.`);
+                
+                // Fallback: Send WhatsApp only
+                if (phoneRaw) {
+                    const phoneDigits = phoneRaw.replace(/\D/g, '');
+                    const whatsappUrl = `https://wa.me/${phoneDigits}?text=${encodeURIComponent(message)}`;
+                    window.open(whatsappUrl, '_blank');
+                }
+            } finally {
+                // Restore button state
+                const sendButton = document.querySelector('#reminder-modal button[onclick="sendReminderToBoth()"]');
+                sendButton.textContent = originalText;
+                sendButton.disabled = false;
+                
+                // Close modal
+                closeReminderModal();
+            }
+        }
+        
+        // Update last reminder date in the table
+        function updateLastReminderDate(debtorId) {
+            const today = new Date().toISOString().slice(0, 10);
+            // Find the row with the matching debtor ID
+            const rows = document.querySelectorAll('tbody tr');
+            rows.forEach(row => {
+                const debtorName = row.querySelector('td:first-child').textContent.trim();
+                const debtor = Object.values(debtorProfiles).find(d => d.name === debtorName);
+                if (debtor && debtor.id === debtorId) {
+                    const lastReminderCell = row.querySelector('td:nth-child(5)'); // Last Reminder column
+                    if (lastReminderCell) {
+                        lastReminderCell.textContent = today;
+                    }
+                }
+            });
+        }
+
+        function closeReminderModal() {
+            const modal = document.getElementById('reminder-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function viewHistory(debtorId) {
+            currentDebtorId = debtorId;
+            const profile = debtorProfiles[debtorId];
+            document.getElementById('history-debtor').textContent = profile ? `${profile.name} (${profile.caseRef})` : `Debtor ${debtorId}`;
+
+            const rowsContainer = document.getElementById('history-rows');
+            rowsContainer.innerHTML = '';
+            const rows = debtorHistories[debtorId] || [];
+            if (rows.length === 0) {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td class="px-4 py-3 text-sm text-gray-500" colspan="4">No history available.</td>`;
+                rowsContainer.appendChild(tr);
+            } else {
+                const appendRow = (date, action, amount, notes) => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td class=\"px-4 py-3 whitespace-nowrap text-sm text-gray-900\">${date}</td>
+                        <td class=\"px-4 py-3 whitespace-nowrap text-sm text-gray-900\">${action}</td>
+                        <td class=\"px-4 py-3 whitespace-nowrap text-sm text-gray-900\">${amount}</td>
+                        <td class=\"px-4 py-3 whitespace-nowrap text-sm text-gray-500\">${notes}</td>
+                    `;
+                    rowsContainer.appendChild(tr);
+                };
+
+                rows.forEach(item => {
+                    // Expand partial payment arrangements into separate rows
+                    if (item.action === 'Arrangement Set' && typeof item.notes === 'string' && /partial payments:/i.test(item.notes)) {
+                        const list = item.notes.replace(/partial payments:\s*/i, '');
+                        // Split on commas that precede a new amount (handle thousands separators inside amounts)
+                        const parts = list.split(/,\s*(?=R\s*[0-9])/i);
+                        let any = false;
+                        parts.forEach(part => {
+                            const m = part.trim().match(/R\s*([0-9.,]+)\s*on\s*(\d{4}-\d{2}-\d{2})/i);
+                            if (m) {
+                                const amount = `R${m[1]}`;
+                                const date = m[2];
+                                appendRow(date, 'Arrangement Installment', amount, 'Scheduled');
+                                any = true;
+                            }
+                        });
+                        // Fallback if parsing failed
+                        if (!any) {
+                            appendRow(item.date, item.action, item.amount || '-', item.notes || '');
+                        }
+                    } else {
+                        appendRow(item.date, item.action, item.amount || '-', item.notes || '');
+                    }
+                });
+            }
+            const modal = document.getElementById('history-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeHistoryModal() {
+            const modal = document.getElementById('history-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // Debtor profiles data
+        const debtorProfiles = {
+            1: { id: 1, name: 'Sipho Mthembu', caseRef: 'LP-2024-001', amount: 'R171.88', status: 'Paid', lastPayment: '2024-09-04', email: 'sipho.mthembu@example.com', phone: '082 123 4567', address: '12 Main Rd, Randburg, 2194', debtSummary: 'Outstanding mobile phone contract with Vodacom. Contract terminated early due to non-payment of monthly installments.' },
+            2: { id: 2, name: 'Sarah Smith', caseRef: 'LP-2024-002', amount: 'R845.32', status: 'Unpaid', lastPayment: '—', email: 'sarah.smith@example.com', phone: '083 987 6543', address: '45 Oak Ave, Sandton, 2196', debtSummary: 'Credit card debt with Standard Bank. Multiple missed payments on retail purchases and cash advances.' },
+            3: { id: 3, name: 'Mike Johnson', caseRef: 'LP-2024-003', amount: 'R1,234.56', status: 'Partial', lastPayment: '2024-08-28', email: 'mike.johnson@example.com', phone: '081 555 1212', address: '7 Pine St, Midrand, 1685', debtSummary: 'Personal loan with FNB. Loan taken for home improvements, partial payments made but account fell into arrears.' },
+            4: { id: 4, name: 'Peter Adams', caseRef: 'LP-2024-004', amount: 'R422.10', status: 'Unpaid', lastPayment: '—', email: 'peter.adams@example.com', phone: '082 111 2222', address: '9 Willow Ln, Roodepoort, 1724', debtSummary: 'Store account with Edgars. Clothing and household items purchased on credit, account suspended due to non-payment.' },
+            5: { id: 5, name: 'Lindiwe Khumalo', caseRef: 'LP-2024-005', amount: 'R2,015.75', status: 'Partial', lastPayment: '2024-08-15', email: 'lindiwe.k@example.com', phone: '071 222 3333', address: '21 Church St, Pretoria, 0002', debtSummary: 'Vehicle finance with WesBank. Car loan payments missed due to job loss, partial payments resumed after finding new employment.' },
+            6: { id: 6, name: 'Thabo Nene', caseRef: 'LP-2024-006', amount: 'R95.00', status: 'Unpaid', lastPayment: '—', email: 'thabo.nene@example.com', phone: '072 444 5555', address: '3 Chief Rd, Soweto, 1868', debtSummary: 'Municipal services account with City of Johannesburg. Outstanding electricity and water charges from previous residence.' },
+            7: { id: 7, name: 'Aisha Patel', caseRef: 'LP-2024-007', amount: 'R650.00', status: 'Paid', lastPayment: '2024-09-04', email: 'aisha.patel@example.com', phone: '079 666 7777', address: '88 Market St, Johannesburg, 2001', debtSummary: 'Medical aid arrears with Discovery Health. Premiums unpaid for 3 months due to financial difficulties, now resolved.' },
+            8: { id: 8, name: 'Kevin Brown', caseRef: 'LP-2024-008', amount: 'R312.40', status: 'Partial', lastPayment: '2024-09-02', email: 'kevin.brown@example.com', phone: '074 888 9999', address: '14 Cedar Rd, Fourways, 2055', debtSummary: 'Gym membership with Virgin Active. Annual membership fees unpaid, partial payment arrangement in place.' }
+        };
+
+        // Show debtor profile modal
+        function viewDebtor(debtorId) {
+            const profile = debtorProfiles[debtorId];
+            if (!profile) { return; }
+            document.getElementById('profile-name').textContent = profile.name;
+            document.getElementById('profile-case').textContent = profile.caseRef;
+            document.getElementById('profile-amount').textContent = profile.amount;
+            document.getElementById('profile-status').textContent = profile.status;
+            document.getElementById('profile-last-payment').textContent = profile.lastPayment;
+            document.getElementById('profile-email').textContent = profile.email;
+            document.getElementById('profile-phone').textContent = profile.phone;
+            document.getElementById('profile-address').textContent = profile.address;
+            document.getElementById('profile-debt-summary').textContent = profile.debtSummary;
+            const modal = document.getElementById('debtor-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeDebtorProfile() {
+            const modal = document.getElementById('debtor-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // Event listeners
+        document.getElementById('payment-amount').addEventListener('input', updateDisplayAmount);
+
+        // Table filtering functions
+        let filterTimeout;
+        
+        function filterTable() {
+            const searchTerm = document.getElementById('search-filter').value.toLowerCase();
+            const statusFilter = document.getElementById('status-filter').value;
+            const amountFilter = document.getElementById('amount-filter').value;
+            
+            const rows = document.querySelectorAll('tbody tr');
+            const tbody = document.querySelector('tbody');
+            
+            // Hide tbody during filtering for smoother performance
+            tbody.style.opacity = '0.5';
+            
+            // Use requestAnimationFrame for smoother updates
+            requestAnimationFrame(() => {
+                let visibleCount = 0;
+                
+                rows.forEach(row => {
+                    const name = row.cells[0].textContent.toLowerCase();
+                    const caseRef = row.cells[1].textContent.toLowerCase();
+                    const amount = row.cells[2].textContent;
+                    const status = row.cells[3].textContent.trim();
+                    
+                    // Search filter
+                    const matchesSearch = !searchTerm || name.includes(searchTerm) || caseRef.includes(searchTerm);
+                    
+                    // Status filter
+                    const matchesStatus = !statusFilter || status === statusFilter;
+                    
+                    // Amount filter
+                    let matchesAmount = true;
+                    if (amountFilter) {
+                        const amountNum = parseFloat(amount.replace(/[R,]/g, ''));
+                        switch (amountFilter) {
+                            case '0-100':
+                                matchesAmount = amountNum >= 0 && amountNum <= 100;
+                                break;
+                            case '100-500':
+                                matchesAmount = amountNum > 100 && amountNum <= 500;
+                                break;
+                            case '500-1000':
+                                matchesAmount = amountNum > 500 && amountNum <= 1000;
+                                break;
+                            case '1000+':
+                                matchesAmount = amountNum > 1000;
+                                break;
+                        }
+                    }
+                    
+                    // Show/hide row based on all filters
+                    if (matchesSearch && matchesStatus && matchesAmount) {
+                        row.style.display = '';
+                        visibleCount++;
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+                
+                // Restore opacity
+                tbody.style.opacity = '1';
+            });
+        }
+        
+        function debouncedFilter() {
+            clearTimeout(filterTimeout);
+            filterTimeout = setTimeout(filterTable, 150);
+        }
+        
+        function clearFilters() {
+            document.getElementById('search-filter').value = '';
+            document.getElementById('status-filter').value = '';
+            document.getElementById('amount-filter').value = '';
+            filterTable();
+        }
+        
+        // Add New Debtor functions
+        function showAddDebtorModal() {
+            const modal = document.getElementById('add-debtor-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeAddDebtorModal() {
+            const modal = document.getElementById('add-debtor-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.getElementById('add-debtor-form').reset();
+        }
+
+        function addNewDebtor() {
+            const name = document.getElementById('new-debtor-name').value;
+            const caseRef = document.getElementById('new-debtor-case').value;
+            const amount = document.getElementById('new-debtor-amount').value;
+            const status = document.getElementById('new-debtor-status').value;
+            const email = document.getElementById('new-debtor-email').value;
+            const phone = document.getElementById('new-debtor-phone').value;
+            const address = document.getElementById('new-debtor-address').value;
+            const summary = document.getElementById('new-debtor-summary').value;
+
+            if (!name || !caseRef || !amount || !status || !summary) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            // Generate new debtor ID
+            const newId = Object.keys(debtorProfiles).length + 1;
+            
+            // Add to debtor profiles data
+            debtorProfiles[newId] = {
+                id: newId,
+                name: name,
+                caseRef: caseRef,
+                amount: `R${parseFloat(amount).toFixed(2)}`,
+                status: status,
+                lastPayment: status === 'Paid' ? new Date().toISOString().slice(0, 10) : '—',
+                email: email || '',
+                phone: phone || '',
+                address: address || '',
+                debtSummary: summary
+            };
+
+            // Add to table
+            const tbody = document.querySelector('tbody');
+            const newRow = document.createElement('tr');
+            newRow.className = 'hover:bg-gray-50';
+            newRow.id = `debtor-${newId}`;
+            
+            const statusClass = status === 'Paid' ? 'bg-green-100 text-green-800' : 
+                              status === 'Partial' ? 'bg-yellow-100 text-yellow-800' : 
+                              status === 'Arrangement' ? 'bg-yellow-100 text-yellow-800' : 
+                              'bg-red-100 text-red-800';
+            
+            newRow.innerHTML = `
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${name}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${caseRef}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R${parseFloat(amount).toFixed(2)}</td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <span class="px-2 py-1 text-xs font-semibold rounded-full ${statusClass}">${status}</span>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${new Date().toISOString().slice(0, 10)}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm space-x-2">
+                    <button onclick="sendReminder(${newId})" class="text-blue-600 hover:text-blue-900">Send Reminder</button>
+                    <button onclick="viewHistory(${newId})" class="text-green-600 hover:text-green-900">View History</button>
+                    <button onclick="viewDebtor(${newId})" class="text-gray-700 hover:text-gray-900">View Debtor</button>
+                </td>
+            `;
+            
+            tbody.appendChild(newRow);
+            
+            // Close modal and show success
+            closeAddDebtorModal();
+            alert('New debtor added successfully!');
+        }
+
+        // Payment Arrangement functions
+        function showPaymentArrangementModal() {
+            const modal = document.getElementById('payment-arrangement-modal');
+            // Ensure modal is mounted at body level so it shows even if current page container is hidden
+            if (modal.parentElement !== document.body) {
+                document.body.appendChild(modal);
+            }
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            // Set default date to tomorrow
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            const fullDateInput = document.getElementById('full-payment-date');
+            if (fullDateInput) {
+                fullDateInput.value = tomorrow.toISOString().slice(0, 10);
+            }
+            
+            // Update amount displays (fallback to debtorData if payment input not on this page)
+            const paymentAmountInput = document.getElementById('payment-amount');
+            const currentAmount = paymentAmountInput ? paymentAmountInput.value : (debtorData?.amount ?? 0);
+            const fullAmountEl = document.getElementById('full-amount-display');
+            const totalDueEl = document.getElementById('total-due');
+            if (fullAmountEl) fullAmountEl.textContent = currentAmount;
+            if (totalDueEl) totalDueEl.textContent = currentAmount;
+            
+            // Add event listeners for payment type changes
+            document.querySelectorAll('input[name="payment-type"]').forEach(radio => {
+                radio.addEventListener('change', togglePaymentSections);
+            });
+            
+            // Add event listeners for partial payment calculations
+            document.addEventListener('input', updatePartialPaymentTotal);
+        }
+
+        function closePaymentArrangementModal() {
+            const modal = document.getElementById('payment-arrangement-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            
+            // Reset form
+            document.getElementById('payment-arrangement-modal').querySelector('form')?.reset();
+            document.querySelector('input[name="payment-type"][value="full"]').checked = true;
+            togglePaymentSections();
+        }
+
+        function togglePaymentSections() {
+            const paymentType = document.querySelector('input[name="payment-type"]:checked').value;
+            const fullSection = document.getElementById('full-payment-section');
+            const partialSection = document.getElementById('partial-payment-section');
+            
+            if (paymentType === 'full') {
+                fullSection.classList.remove('hidden');
+                partialSection.classList.add('hidden');
+            } else {
+                fullSection.classList.add('hidden');
+                partialSection.classList.remove('hidden');
+            }
+        }
+
+        function addPartialPayment() {
+            const container = document.getElementById('partial-payments-container');
+            const newPayment = document.createElement('div');
+            newPayment.className = 'partial-payment-item border border-gray-200 rounded-lg p-4';
+            newPayment.innerHTML = `
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm text-gray-600 mb-1">Amount</label>
+                        <input type="number" class="partial-amount w-full border border-gray-300 rounded px-3 py-2" step="0.01" placeholder="0.00">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-600 mb-1">Date</label>
+                        <input type="date" class="partial-date w-full border border-gray-300 rounded px-3 py-2">
+                    </div>
+                </div>
+                <button type="button" onclick="removePartialPayment(this)" class="mt-2 text-red-600 hover:text-red-800 text-sm">Remove</button>
+            `;
+            container.appendChild(newPayment);
+        }
+
+        function removePartialPayment(button) {
+            button.closest('.partial-payment-item').remove();
+            updatePartialPaymentTotal();
+        }
+
+        function updatePartialPaymentTotal() {
+            const amounts = document.querySelectorAll('.partial-amount');
+            let total = 0;
+            amounts.forEach(input => {
+                const value = parseFloat(input.value) || 0;
+                total += value;
+            });
+            document.getElementById('total-arranged').textContent = total.toFixed(2);
+        }
+
+        function submitPaymentArrangement() {
+            const paymentType = document.querySelector('input[name="payment-type"]:checked').value;
+            
+            let arrangementDetails = '';
+            
+            if (paymentType === 'full') {
+                const date = document.getElementById('full-payment-date').value;
+                if (!date) {
+                    alert('Please select a payment date.');
+                    return;
+                }
+                const amount = document.getElementById('full-amount-display').textContent;
+                arrangementDetails = `Full payment of R${amount} on ${date}`;
+            } else {
+                const amounts = document.querySelectorAll('.partial-amount');
+                const dates = document.querySelectorAll('.partial-date');
+                const payments = [];
+                
+                for (let i = 0; i < amounts.length; i++) {
+                    const amount = amounts[i].value;
+                    const date = dates[i].value;
+                    if (amount && date) {
+                        payments.push(`R${amount} on ${date}`);
+                    }
+                }
+                
+                if (payments.length === 0) {
+                    alert('Please add at least one partial payment with amount and date.');
+                    return;
+                }
+                
+                arrangementDetails = `Partial payments: ${payments.join(', ')}`;
+            }
+            
+            // Simulate submission
+            alert(`Payment arrangement submitted successfully!\n\n${arrangementDetails}`);
+            
+            // Update admin dashboard status for current debtor (default to 1 if not set)
+            const targetId = currentDebtorId || 1;
+            const statusBadge = document.querySelector(`#debtor-${targetId} span`);
+            if (statusBadge) {
+                statusBadge.textContent = 'Arrangement';
+                statusBadge.className = 'px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800';
+            }
+            
+            // Append to debtor history
+            if (!debtorHistories[targetId]) debtorHistories[targetId] = [];
+            debtorHistories[targetId].push({
+                date: new Date().toLocaleString(),
+                action: 'Arrangement Set',
+                amount: '-',
+                notes: arrangementDetails
+            });
+            
+            closePaymentArrangementModal();
+        }
+
+        // Actions menu functions
+        function toggleActionsMenu(debtorId) {
+            // Close all other menus first
+            document.querySelectorAll('[id^="actions-menu-"]').forEach(menu => {
+                if (menu.id !== `actions-menu-${debtorId}`) {
+                    menu.classList.add('hidden');
+                }
+            });
+            
+            // Toggle current menu
+            const menu = document.getElementById(`actions-menu-${debtorId}`);
+            menu.classList.toggle('hidden');
+        }
+
+        function viewDebtorPage(debtorId) {
+            // Update debtor data based on selected debtor
+            const debtor = debtorProfiles[debtorId];
+            if (debtor) {
+                debtorData = {
+                    name: debtor.name,
+                    caseRef: debtor.caseRef,
+                    amount: parseFloat(debtor.amount.replace('R', '').replace(',', ''))
+                };
+                
+                // Update the email page content with debtor-specific data
+                updateEmailPageContent(debtor);
+            }
+            
+            // Open email page in new tab
+            const baseUrl = window.location.origin + window.location.pathname;
+            const link = `${baseUrl}#debtor-${debtorId}`;
+            window.open(link, '_blank');
+            closeAllMenus();
+        }
+        
+        function updateEmailPageContent(debtor) {
+            // Extract creditor name from debt summary
+            const creditor = extractCreditorFromSummary(debtor.debtSummary);
+            
+            // Update email page content
+            document.querySelector('#email-page .text-red-800 strong').textContent = `Dear ${debtor.name},`;
+            document.querySelector('#email-page .font-medium').textContent = debtor.name;
+            document.querySelectorAll('#email-page .font-medium')[1].textContent = debtor.caseRef;
+            document.querySelector('#email-page .text-3xl').textContent = debtor.amount;
+            
+            // Update Original Creditor
+            document.querySelectorAll('#email-page .font-medium')[2].textContent = creditor;
+            
+            // Update Pay Now button amount on email page
+            const payNowButton = document.querySelector('#email-page button[onclick="showPage(\'payment\')"]');
+            if (payNowButton) {
+                payNowButton.textContent = `💳 Pay Now - ${debtor.amount}`;
+            }
+        }
+        
+        function extractCreditorFromSummary(summary) {
+            // Extract creditor names from debt summaries
+            const creditorMap = {
+                'Vodacom': 'Vodacom',
+                'Standard Bank': 'Standard Bank',
+                'FNB': 'FNB',
+                'Edgars': 'Edgars',
+                'WesBank': 'WesBank',
+                'City of Johannesburg': 'City of Johannesburg',
+                'Discovery Health': 'Discovery Health',
+                'Virgin Active': 'Virgin Active'
+            };
+            
+            for (const [key, value] of Object.entries(creditorMap)) {
+                if (summary.includes(key)) {
+                    return value;
+                }
+            }
+            
+            return 'Original Creditor'; // Fallback
+        }
+        
+        function updatePaymentPageContent(debtor) {
+            // Update payment page header case reference
+            document.querySelector('#payment-page .text-right .font-semibold').textContent = debtor.caseRef;
+            
+            // Update payment page debtor information
+            const debtorNameElements = document.querySelectorAll('#payment-page .font-medium');
+            debtorNameElements[0].textContent = debtor.name; // Debtor Name
+            debtorNameElements[1].textContent = debtor.caseRef; // Case Reference
+            
+            // Update payment amount
+            document.getElementById('payment-amount').value = debtorData.amount;
+            updateDisplayAmount();
+        }
+
+        function editDebtor(debtorId) {
+            alert(`Edit debtor ${debtorId} - This would open an edit form`);
+            closeAllMenus();
+        }
+
+        function deleteDebtor(debtorId) {
+            if (confirm(`Are you sure you want to delete debtor ${debtorId}?`)) {
+                const row = document.getElementById(`debtor-${debtorId}`);
+                if (row) {
+                    row.remove();
+                }
+                delete debtorProfiles[debtorId];
+                alert(`Debtor ${debtorId} deleted successfully`);
+            }
+            closeAllMenus();
+        }
+
+        function copyDebtorLink(debtorId) {
+            // Update debtor data based on selected debtor
+            const debtor = debtorProfiles[debtorId];
+            if (debtor) {
+                debtorData = {
+                    name: debtor.name,
+                    caseRef: debtor.caseRef,
+                    amount: parseFloat(debtor.amount.replace('R', '').replace(',', ''))
+                };
+                
+                // Update the email page content
+                updateEmailPageContent(debtor);
+            }
+            
+            // Open email page in new tab AND copy link to clipboard
+            const baseUrl = window.location.origin + window.location.pathname;
+            const link = `${baseUrl}#debtor-${debtorId}`;
+            
+            // Open in new tab
+            window.open(link, '_blank');
+            
+            // Copy to clipboard
+            navigator.clipboard.writeText(link).then(() => {
+                alert('Debtor page opened in new tab and link copied to clipboard!');
+            }).catch(() => {
+                alert('Debtor page opened in new tab, but failed to copy link to clipboard');
+            });
+            
+            closeAllMenus();
+        }
+
+        function closeAllMenus() {
+            document.querySelectorAll('[id^="actions-menu-"]').forEach(menu => {
+                menu.classList.add('hidden');
+            });
+        }
+
+        // Close menus when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('[id^="actions-menu-"]') && !event.target.closest('button[onclick^="toggleActionsMenu"]')) {
+                closeAllMenus();
+            }
+        });
+
+        // Add event listeners for filters
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('search-filter').addEventListener('input', debouncedFilter);
+            document.getElementById('status-filter').addEventListener('change', filterTable);
+            document.getElementById('amount-filter').addEventListener('change', filterTable);
+        });
+
+        // Handle URL hash for debtor-specific pages
+        function handleUrlHash() {
+            const hash = window.location.hash;
+            if (hash && hash.startsWith('#debtor-')) {
+                const debtorId = parseInt(hash.replace('#debtor-', ''));
+                const debtor = debtorProfiles[debtorId];
+                if (debtor) {
+                    debtorData = {
+                        name: debtor.name,
+                        caseRef: debtor.caseRef,
+                        amount: parseFloat(debtor.amount.replace('R', '').replace(',', ''))
+                    };
+                    updateEmailPageContent(debtor);
+                    showPage('email');
+                }
+            } else {
+                showPage('email');
+            }
+        }
+
+        // Initialize
+        handleUrlHash();
+    </script>
+</body>
+</html>
