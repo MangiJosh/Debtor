@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Email to tshimangadzot@gmail.com</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #333;
+            margin: 0;
+            font-size: 2.5em;
+        }
+        .header p {
+            color: #666;
+            margin: 10px 0 0 0;
+        }
+        .test-info {
+            background: #e8f4fd;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #3498db;
+        }
+        .test-info h3 {
+            margin: 0 0 15px 0;
+            color: #2c3e50;
+        }
+        .test-info ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .test-info li {
+            margin: 8px 0;
+            color: #34495e;
+        }
+        .button {
+            background: #27ae60;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+        }
+        .button:hover {
+            background: #229954;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(39, 174, 96, 0.4);
+        }
+        .button:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        .result {
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        .info {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+        }
+        .loading {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+        }
+        .email-preview {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #dee2e6;
+        }
+        .email-preview h4 {
+            margin: 0 0 15px 0;
+            color: #495057;
+        }
+        .email-preview p {
+            margin: 5px 0;
+            color: #6c757d;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📧 Test Email Sender</h1>
+            <p>Send a dummy email to tshimangadzot@gmail.com</p>
+        </div>
+        
+        <div class="test-info">
+            <h3>📋 Test Email Details</h3>
+            <ul>
+                <li><strong>Recipient:</strong> tshimangadzot@gmail.com</li>
+                <li><strong>Test Debtor:</strong> Tshimanga Dzot</li>
+                <li><strong>Case Reference:</strong> LP-2024-TEST</li>
+                <li><strong>Test Amount:</strong> R1,500.00</li>
+                <li><strong>Email Type:</strong> Payment Reminder (Test)</li>
+            </ul>
+        </div>
+        
+        <div class="email-preview">
+            <h4>📄 Email Preview</h4>
+            <p><strong>Subject:</strong> Test Email - Payment Reminder - Case Reference: LP-2024-TEST</p>
+            <p><strong>Content:</strong> Professional debt collection reminder with payment link</p>
+            <p><strong>Features:</strong> HTML formatted, responsive design, security notices</p>
+        </div>
+        
+        <div style="text-align: center;">
+            <button class="button" onclick="sendTestEmail()" id="sendButton">
+                📧 Send Test Email
+            </button>
+            <button class="button" onclick="location.reload()" style="background: #6c757d;">
+                🔄 Refresh Page
+            </button>
+        </div>
+        
+        <div id="result"></div>
+        
+        <div class="footer">
+            <p>Legal Partners Debt Collection System | Test Email Tool</p>
+            <p>This tool sends a test email to verify email functionality</p>
+        </div>
+    </div>
+    
+    <script>
+        async function sendTestEmail() {
+            const sendButton = document.getElementById('sendButton');
+            const resultDiv = document.getElementById('result');
+            
+            // Update button state
+            sendButton.disabled = true;
+            sendButton.textContent = '📤 Sending...';
+            
+            // Show loading message
+            resultDiv.innerHTML = '<div class="result loading">🔄 Sending test email to tshimangadzot@gmail.com...</div>';
+            
+            try {
+                const response = await fetch('send_dummy_email.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email_type: 'test'
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    resultDiv.innerHTML = `
+                        <div class="result success">
+                            <h3>✅ Test Email Sent Successfully!</h3>
+                            <p><strong>Status:</strong> ${result.message}</p>
+                            <p><strong>Recipient:</strong> ${result.data.email_sent_to}</p>
+                            <p><strong>Debtor Name:</strong> ${result.data.debtor_name}</p>
+                            <p><strong>Case Reference:</strong> ${result.data.case_ref}</p>
+                            <p><strong>Test Amount:</strong> ${result.data.test_amount}</p>
+                            <p style="margin-top: 15px; font-weight: bold;">📬 Check the inbox of tshimangadzot@gmail.com for the test email!</p>
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="result error">
+                            <h3>❌ Error Sending Email</h3>
+                            <p><strong>Error:</strong> ${result.error}</p>
+                            <p style="margin-top: 10px;">This might be due to:</p>
+                            <ul style="margin: 10px 0; padding-left: 20px;">
+                                <li>PHP mail() function not configured</li>
+                                <li>SMTP settings not properly configured</li>
+                                <li>Server email restrictions</li>
+                            </ul>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="result error">
+                        <h3>❌ Network Error</h3>
+                        <p><strong>Error:</strong> ${error.message}</p>
+                        <p style="margin-top: 10px;">This might be due to:</p>
+                        <ul style="margin: 10px 0; padding-left: 20px;">
+                            <li>Server not running</li>
+                            <li>PHP not available</li>
+                            <li>Network connectivity issues</li>
+                        </ul>
+                    </div>
+                `;
+            } finally {
+                // Restore button state
+                sendButton.disabled = false;
+                sendButton.textContent = '📧 Send Test Email';
+            }
+        }
+        
+        // Auto-focus on send button
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('sendButton').focus();
+        });
+    </script>
+</body>
+</html>
