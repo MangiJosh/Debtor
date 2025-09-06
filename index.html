@@ -719,6 +719,17 @@
                                 <textarea id="reminder-message" rows="6" class="w-full border border-gray-300 rounded px-3 py-2"></textarea>
                                 <div class="text-xs text-gray-500 mt-1">Will send to both WhatsApp and Email.</div>
                             </div>
+                            
+                            <!-- Test Scenarios (Development Only) -->
+                            <div class="border-t pt-4">
+                                <div class="text-xs text-gray-500 mb-2">Test Scenarios:</div>
+                                <div class="flex flex-wrap gap-2">
+                                    <button onclick="testScenario('success')" class="text-xs bg-green-100 hover:bg-green-200 text-green-800 px-2 py-1 rounded">Success</button>
+                                    <button onclick="testScenario('error')" class="text-xs bg-red-100 hover:bg-red-200 text-red-800 px-2 py-1 rounded">API Error</button>
+                                    <button onclick="testScenario('timeout')" class="text-xs bg-yellow-100 hover:bg-yellow-200 text-yellow-800 px-2 py-1 rounded">Timeout</button>
+                                    <button onclick="testScenario('network_error')" class="text-xs bg-orange-100 hover:bg-orange-200 text-orange-800 px-2 py-1 rounded">Network Error</button>
+                                </div>
+                            </div>
                         </div>
                         <div class="px-6 py-4 border-t flex justify-end space-x-2">
                             <button onclick="closeReminderModal()" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium px-4 py-2 rounded">Close</button>
@@ -972,6 +983,14 @@
             modal.classList.add('flex');
         }
 
+        // Global variable to store test scenario
+        let currentTestScenario = 'success';
+        
+        function testScenario(scenario) {
+            currentTestScenario = scenario;
+            console.log('Test scenario set to:', scenario);
+        }
+        
         async function sendReminderToBoth() {
             const phoneRaw = document.getElementById('reminder-phone').value || '';
             const email = document.getElementById('reminder-email').value || '';
@@ -982,15 +1001,19 @@
                 return;
             }
             
+            // Get button reference and show loading state
+            const sendButton = document.querySelector('#reminder-modal button[onclick="sendReminderToBoth()"]');
+            const originalText = sendButton.textContent;
+            sendButton.textContent = 'Sending...';
+            sendButton.disabled = true;
+            
             try {
-                // Show loading state
-                const sendButton = document.querySelector('#reminder-modal button[onclick="sendReminderToBoth()"]');
-                const originalText = sendButton.textContent;
-                sendButton.textContent = 'Sending...';
-                sendButton.disabled = true;
+                // Send email via PHP API with timeout
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
                 
-                // Send email via PHP API
-                const response = await fetch('email_handler.php', {
+                const apiUrl = `mock_email_api.php?scenario=${currentTestScenario}`;
+                const response = await fetch(apiUrl, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -999,8 +1022,16 @@
                     body: JSON.stringify({
                         debtor_id: currentDebtorId,
                         email_type: 'reminder'
-                    })
+                    }),
+                    signal: controller.signal
                 });
+                
+                clearTimeout(timeoutId);
+                
+                // Check if response is ok
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
                 
                 const result = await response.json();
                 
@@ -1035,7 +1066,15 @@
                 
             } catch (error) {
                 console.error('Error:', error);
-                alert(`❌ Network error: ${error.message}\n\nWhatsApp will still be sent.`);
+                
+                let errorMessage = 'Network error occurred';
+                if (error.name === 'AbortError') {
+                    errorMessage = 'Request timed out. Please try again.';
+                } else if (error.message) {
+                    errorMessage = error.message;
+                }
+                
+                alert(`❌ ${errorMessage}\n\nWhatsApp will still be sent.`);
                 
                 // Fallback: Send WhatsApp only
                 if (phoneRaw) {
@@ -1044,8 +1083,7 @@
                     window.open(whatsappUrl, '_blank');
                 }
             } finally {
-                // Restore button state
-                const sendButton = document.querySelector('#reminder-modal button[onclick="sendReminderToBoth()"]');
+                // Always restore button state
                 sendButton.textContent = originalText;
                 sendButton.disabled = false;
                 
